@@ -1,0 +1,50 @@
+[
+ {
+  "i": 0,
+  "text": "Se voc\u00ea colocar um painel solar no telhado, de onde vem a energia da sua casa?",
+  "start": 0.0,
+  "dur": 4.435
+ },
+ {
+  "i": 1,
+  "text": "Muita gente acha que ele usa o calor do sol.",
+  "start": 4.675,
+  "dur": 2.383
+ },
+ {
+  "i": 2,
+  "text": "Mas, na verdade, ele usa a luz.",
+  "start": 7.178,
+  "dur": 1.974
+ },
+ {
+  "i": 3,
+  "text": "Cada c\u00e9lula \u00e9 feita de sil\u00edcio, em duas camadas.",
+  "start": 9.272,
+  "dur": 2.799
+ },
+ {
+  "i": 4,
+  "text": "Quando a luz bate, ela solta el\u00e9trons, que correm pelos fios.",
+  "start": 12.191,
+  "dur": 3.193
+ },
+ {
+  "i": 5,
+  "text": "S\u00f3 que isso \u00e9 corrente cont\u00ednua, ent\u00e3o um inversor transforma em alternada, igual \u00e0 da tomada.",
+  "start": 15.504,
+  "dur": 5.355
+ },
+ {
+  "i": 6,
+  "text": "Ela passa pelo quadro de luz e acende a sua casa.",
+  "start": 20.98,
+  "dur": 2.935
+ },
+ {
+  "i": 7,
+  "text": "E o que sobra vai para a rede, e vira cr\u00e9dito na sua conta.",
+  "start": 24.035,
+  "dur": 3.203
+ }
+]
