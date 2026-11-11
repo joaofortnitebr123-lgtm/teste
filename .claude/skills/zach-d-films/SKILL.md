@@ -26,7 +26,7 @@ KIT=$(python3 -c 'import os,sys;print(os.path.realpath(os.path.join(sys.argv[1],
 [ -x "$KIT/.venv/bin/python" ] && [ -d "$KIT/models" ] || bash "$KIT/setup.sh" --voice   # word timings + free voice, ~1 GB once
 PY="$KIT/.venv/bin/python"
 ```
-Needs ffmpeg, Node and Python 3.9+. It renders with WebGL in headless Chrome: about 0.2 to 0.5 s a frame on a Mac, a few minutes for a short. On a machine without a usable GPU, set `GL=swiftshader` (much slower).
+Needs ffmpeg, Node and Python 3.9+. It renders with WebGL in headless Chrome: about 0.2 to 0.5 s a frame on a Mac, a few minutes for a short. On a machine without a usable GPU, set `GL=swiftshader` (much slower). If Playwright can't download its own Chromium (e.g. in a Claude Code cloud container), point it at an installed one: `CHROME_PATH=/opt/pw-browsers/chromium`.
 
 ## The engine
 | File | What |
