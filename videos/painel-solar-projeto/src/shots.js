@@ -4,21 +4,21 @@ import { glowSprite, sparks, streak, rippleOverlay, box, solarPanel, panelOnRack
 import { materials } from './materials.js';
 import { kf, lerp, smooth, easeOut, easeIn, easeInOut, range, clamp, V, cam, place, shake, ikArm } from './anim.js';
 
-export const DURATION = 28.0;
+export const DURATION = 34.0;
 
 // [start, text, end?]
 export const CAPTIONS = [
-  [0.00, 'Se você colocar'], [0.89, 'um painel solar'], [1.67, 'no telhado'], [2.52, 'de onde vem'], [3.18, 'a energia'], [3.75, 'da sua casa?'],
-  [4.67, 'Muita gente acha'], [5.52, 'que ele usa'], [6.26, 'o calor do sol'],
-  [7.18, 'Mas'], [7.56, 'na verdade'], [8.31, 'ele usa a luz'],
-  [9.27, 'Cada célula'], [9.95, 'é feita'], [10.46, 'de silício'], [11.30, 'em duas camadas'],
-  [12.19, 'Quando a luz'], [12.81, 'bate'], [13.32, 'ela solta'], [13.85, 'elétrons'], [14.49, 'que correm'], [15.00, 'pelos fios'],
-  [15.50, 'Só que isso'], [16.18, 'é corrente'], [16.80, 'contínua'], [17.46, 'então um inversor'], [18.37, 'transforma'], [19.00, 'em alternada'], [19.77, 'igual'], [20.10, 'à da tomada'],
-  [20.98, 'Ela passa'], [21.60, 'pelo quadro de luz'], [22.75, 'e acende'], [23.22, 'a sua casa'],
-  [24.04, 'E o que sobra'], [24.79, 'vai para a rede'], [25.86, 'e vira crédito'], [26.65, 'na sua conta', 27.6],
+  [0.00, 'Se você colocar'], [0.81, 'um painel solar'], [1.61, 'no telhado'], [2.59, 'de onde vem'], [3.20, 'a energia'], [3.80, 'da sua casa?'],
+  [4.93, 'Muita gente acha'], [5.85, 'que ele usa'], [6.33, 'o calor do sol'],
+  [7.69, 'Mas'], [7.95, 'na verdade'], [8.81, 'ele usa a luz'],
+  [10.22, 'Cada célula'], [11.29, 'é feita'], [11.75, 'de silício'], [12.75, 'em duas camadas'],
+  [14.20, 'Quando a luz'], [14.90, 'bate'], [15.65, 'ela solta'], [16.34, 'elétrons'], [17.04, 'que correm'], [17.53, 'pelos fios'],
+  [18.77, 'Só que isso'], [19.27, 'é corrente'], [19.74, 'contínua'], [20.55, 'então um inversor'], [22.11, 'transforma'], [22.92, 'em alternada'], [24.10, 'igual'], [24.43, 'à da tomada'],
+  [25.58, 'Ela passa'], [26.15, 'pelo quadro de luz'], [27.45, 'e acende'], [27.98, 'a sua casa'],
+  [29.02, 'E o que sobra'], [30.02, 'vai para a rede'], [31.24, 'e vira crédito'], [32.25, 'na sua conta', 33.6],
 ];
 // [fadeInStart, fullStart, fullEnd, fadeOutEnd] to black
-export const FADES = [[6.98, 7.12, 7.2, 7.36]];
+export const FADES = [[7.4, 7.54, 7.62, 7.8]];
 
 function idle(t, k = 1) { return Math.sin(t * 1.6) * 0.012 * k; }
 const STAND = {
@@ -69,9 +69,9 @@ function shot1({ makeStage }) {
     update(t) {
       const look = smooth(range(t, 1.2, 2.4));
       standPose(man, t, { neck: [-0.35 * look, -0.2 * look, 0], head: [-0.25 * look, 0, 0] });
-      man.setMouth(0.15 * smooth(range(t, 3.4, 3.9)));
+      man.setMouth(0.15 * smooth(range(t, 3.7, 4.2)));
       h.panels.forEach(p => p.setGlow(0.0));
-      const k = easeInOut(range(t, 0, 4.6));
+      const k = easeInOut(range(t, 0, 4.85));
       const s = shake(t, 0.5);
       place(c, [lerp(2.8, 1.1, k) + s[0], lerp(2.6, 3.6, k) + s[1], lerp(10.5, 4.6, k)], [lerp(0, 0.1, k), lerp(1.7, 2.55, k), lerp(0, 0.6, k)]);
       return { dof: { focus: c.position.distanceTo(V(0, 2.4, 0.8)), aperture: 0.0008, maxblur: 0.004 }, bloom: 0.5 };
@@ -112,7 +112,7 @@ function shot2({ makeStage }) {
       u.uRadius.value = 0.1 + easeOut(range(t, 0.2, 2.2)) * 1.0;
       u.uTime.value = t * 0.7; u.uRings.value = 60; u.uSpot.value = 0.2; u.uSpotAmp.value = 0.6;
       u.uBlot.value = 0.5 * smooth(range(t, 0.8, 2.0));
-      const k = easeInOut(range(t, 0, 2.6));
+      const k = easeInOut(range(t, 0, 2.75));
       const s = shake(t, 0.8, 4);
       place(c, [lerp(0.35, 0.15, k) + s[0], lerp(1.5, 1.45, k) + s[1], lerp(4.3, 3.7, k)], [0.05, 1.2, 0]);
       return { dof: { focus: c.position.distanceTo(V(-0.2, 1.6, 0.3)), aperture: 0.002, maxblur: 0.008 }, bloom: 0.5, exposure: 1.05 };
@@ -148,7 +148,7 @@ function shot3({ makeStage }) {
         const f = flashes[i]; f.position.copy(hit).addScaledVector(src, 0.01);
         const fl = Math.max(0, 1 - ph) ** 8; f.material.opacity = 0.0 + (ph > 0.92 ? (ph - 0.92) / 0.08 : 0) * 0.9; f.scale.setScalar(0.08 + 0.05 * fl);
       }
-      const k = easeInOut(range(t, 0, 2.2));
+      const k = easeInOut(range(t, 0, 2.5));
       place(c, [lerp(-2.2, -1.9, k), lerp(1.45, 1.35, k), lerp(2.3, 2.0, k)], [0.25, lerp(1.0, 0.95, k), 0]);
       return { dof: { focus: c.position.distanceTo(V(0, 0.85, 0.1)), aperture: 0.004, maxblur: 0.01 }, bloom: 0.9 };
     },
@@ -165,11 +165,11 @@ function shot4({ makeStage }) {
     update(t) {
       cs.rotation.y = -0.6 + t * 0.18;
       cs.rotation.x = 0.05;
-      const ex = easeOut(range(t, 1.9, 2.6));
+      const ex = easeOut(range(t, 2.9, 3.6));
       cs.explode(ex);
-      cs.nMat.emissiveIntensity = 0.5 * smooth(range(t, 2.1, 2.4)) * (1 - smooth(range(t, 2.6, 2.9)));
-      cs.pMat.emissiveIntensity = 0.5 * smooth(range(t, 2.4, 2.7));
-      const k = easeInOut(range(t, 0, 2.9));
+      cs.nMat.emissiveIntensity = 0.5 * smooth(range(t, 3.1, 3.4)) * (1 - smooth(range(t, 3.6, 3.9)));
+      cs.pMat.emissiveIntensity = 0.5 * smooth(range(t, 3.4, 3.7));
+      const k = easeInOut(range(t, 0, 4.0));
       place(c, [lerp(1.2, 1.35, k), lerp(2.0, 1.85, k), lerp(1.7, 1.95, k)], [0, lerp(1.25, 1.3, k), 0]);
       return { dof: { focus: c.position.distanceTo(cs.position), aperture: 0.003, maxblur: 0.008 }, bloom: 0.45 };
     },
@@ -188,7 +188,7 @@ function shot5({ makeStage }) {
   const wire = cable([[edge.x, edge.y, edge.z], ...[[S + 0.25, gy - 0.02, 0.05], [S + 0.7, gy - 0.25, 0.15], [S + 1.4, gy - 0.6, 0.0], [S + 2.6, gy - 1.0, -0.3]].map(p => { const w = L(...p); return [w.x, w.y, w.z]; })], 0.016, 0xc8622a);
   scene.add(wire);
   const R = (i, k) => { const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); };
-  const N = 22, src = V(-0.2, 1, 0.35).normalize();
+  const N = 31, src = V(-0.2, 1, 0.35).normalize();
   const ph = [], el = [], fl = [], tr = [];
   for (let i = 0; i < N; i++) {
     const a = photon(0.018); scene.add(a); ph.push(a);
@@ -232,7 +232,7 @@ function shot5({ makeStage }) {
           e.visible = u < 0.999;
         }
       }
-      const k = easeInOut(range(t, 0, 3.3));
+      const k = easeInOut(range(t, 0, 4.55));
       const s = shake(t, 0.5, 2);
       place(c, [lerp(-0.1, 0.3, k) + s[0], lerp(1.95, 1.85, k) + s[1], lerp(1.55, 1.45, k)], [lerp(-0.02, 0.12, k), 1.2, 0]);
       return { dof: { focus: c.position.distanceTo(cs.position), aperture: 0.004, maxblur: 0.01 }, bloom: 0.8 };
@@ -258,7 +258,7 @@ function shot6({ makeStage }) {
       h.panels.forEach(p => p.setGlow(0.25));
       flow(pool, cb.curve, t, 0.45);
       pool.items.forEach(d => d.position.add(V(0.02, 0.015, 0)));
-      const k = easeInOut(range(t, 0, 1.95));
+      const k = easeInOut(range(t, 0, 1.8));
       place(c, [lerp(4.4, 4.0, k), lerp(2.6, 2.2, k), lerp(3.2, 2.6, k)], [1.6, lerp(1.85, 1.6, k), lerp(0.8, 0.5, k)]);
       return { dof: { focus: c.position.distanceTo(V(1.65, 1.8, 0.7)), aperture: 0.002, maxblur: 0.006 }, bloom: 0.6 };
     },
@@ -283,7 +283,7 @@ function shot7({ makeStage }) {
       // DC: straight, steady line flowing in from the left
       dc.items.forEach((d, i) => { const u = ((i / NDC + t * 0.35) % 1); d.position.set(-0.85 + u * 0.58, 1.62, 0.05); });
       // AC: a wave flowing out to the right (appears once the inverter is on)
-      const on = smooth(range(t, 0.7, 1.3));
+      const on = smooth(range(t, 1.5, 2.1));
       ac.items.forEach((d, i) => {
         const u = ((i / NAC + t * 0.25) % 1);
         const x = 0.3 + u * 0.6;
@@ -291,7 +291,7 @@ function shot7({ makeStage }) {
         d.scale.setScalar(Math.max(0.001, on * smooth(range(u, 0, 0.08))));
       });
       inv.screen.emissiveIntensity = 0.4 + 1.4 * on * (0.8 + 0.2 * Math.sin(t * 12));
-      const k = easeInOut(range(t, 0, 3.55));
+      const k = easeInOut(range(t, 0, 5.0));
       const s = shake(t, 0.5, 5);
       place(c, [lerp(-0.1, 0.05, k) + s[0], 1.5 + s[1], lerp(3.6, 3.2, k)], [lerp(-0.1, 0.05, k), 1.42, 0]);
       return { dof: { focus: c.position.z, aperture: 0.002, maxblur: 0.006 }, bloom: 0.7 };
@@ -314,7 +314,7 @@ function shot8({ makeStage }) {
   const pool = dotPool(10, () => electron(0.016)); scene.add(pool);
   const man = person(); man.root.position.set(0.05, 0, -0.35); man.root.rotation.y = 0.15; scene.add(man.root);
   const c = cam(42);
-  const TSW = 0.85, TON = 1.8;
+  const TSW = 0.95, TON = 2.17;
   return {
     scene, camera: c,
     update(t) {
@@ -328,9 +328,9 @@ function shot8({ makeStage }) {
       const up = smooth(range(t, TON + 0.1, TON + 0.6));
       standPose(man, t, { neck: [-0.35 * up, 0.1 * up, 0], head: [-0.25 * up, 0.1, 0], lSh: [0.05, 0, 0.16 + 0.5 * up], rSh: [0.05, 0, -0.16 - 0.5 * up], lEl: [-0.25 - 0.6 * up, 0, 0], rEl: [-0.25 - 0.6 * up, 0, 0] });
       man.setMouth(0.6 * up);
-      const k = easeInOut(range(t, 0, 3.05));
+      const k = easeInOut(range(t, 0, 3.45));
       const s = shake(t, 0.5, 8);
-      place(c, [lerp(1.0, 0.85, k) + s[0], lerp(1.55, 1.45, k) + s[1], lerp(3.0, 2.6, k)], [lerp(-0.45, -0.05, smooth(range(t, 0.9, 2.0))), lerp(1.65, 1.75, k), -0.9]);
+      place(c, [lerp(1.0, 0.85, k) + s[0], lerp(1.55, 1.45, k) + s[1], lerp(3.0, 2.6, k)], [lerp(-0.45, -0.05, smooth(range(t, 1.1, 2.3))), lerp(1.65, 1.75, k), -0.9]);
       return { dof: { focus: c.position.distanceTo(V(0, 1.6, -0.4)), aperture: 0.0015, maxblur: 0.006 }, bloom: 0.45, exposure: lerp(0.6, 0.85, on) };
     },
   };
@@ -354,7 +354,7 @@ function shot9({ makeStage }) {
       h.winMat.emissiveIntensity = 0.5;
       flow(pool, cb.curve, t, 1.2);
       mt.setValue(1250 + Math.floor(t * 9));
-      const k = easeInOut(range(t, 0.2, 3.3));
+      const k = easeInOut(range(t, 0.3, 4.4));
       const s = shake(t, 0.5, 9);
       c.fov = lerp(50, 40, k);
       const L = [lerp(2.5, 1.69, k), lerp(2.7, 1.17, k), lerp(-0.6, 0.65, k)];
@@ -365,13 +365,13 @@ function shot9({ makeStage }) {
 }
 
 export const SHOTS = [
-  { start: 0.0, end: 4.62, build: shot1 },
-  { start: 4.62, end: 7.16, build: shot2 },
-  { start: 7.16, end: 9.24, build: shot3 },
-  { start: 9.24, end: 12.15, build: shot4 },
-  { start: 12.15, end: 15.45, build: shot5 },
-  { start: 15.45, end: 17.42, build: shot6 },
-  { start: 17.42, end: 20.95, build: shot7 },
-  { start: 20.95, end: 24.0, build: shot8 },
-  { start: 24.0, end: DURATION + 1, build: shot9 },
+  { start: 0.0, end: 4.85, build: shot1 },
+  { start: 4.85, end: 7.6, build: shot2 },
+  { start: 7.6, end: 10.1, build: shot3 },
+  { start: 10.1, end: 14.1, build: shot4 },
+  { start: 14.1, end: 18.65, build: shot5 },
+  { start: 18.65, end: 20.45, build: shot6 },
+  { start: 20.45, end: 25.45, build: shot7 },
+  { start: 25.45, end: 28.9, build: shot8 },
+  { start: 28.9, end: DURATION + 1, build: shot9 },
 ];
